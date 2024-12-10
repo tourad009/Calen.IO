@@ -9,15 +9,14 @@
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
     "@fullcalendar/vue3": "^6.1.10",
-    "lucide": "^0.462.0",
-    "lucide-vue-next": "^0.462.0",
-    "vue": "^3.2.45"
+    "lucide-vue-next": "^0.468.0",
+    "vue": "^3.2.45",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^3.4.16",
     "vite": "^4.0.0"
   },
   "scripts": {
