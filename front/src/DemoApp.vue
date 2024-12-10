@@ -1,14 +1,60 @@
+<template>
+  <div class="demo-app">
+    <div class="demo-app-sidebar">
+      <div class="demo-app-sidebar-section">
+        <h2>Instructions</h2>
+        <ul>
+          <li>Select dates and you will be prompted to create a new event</li>
+          <li>Drag, drop, and resize events</li>
+          <li>Click an event to delete it</li>
+        </ul>
+      </div>
+      <div class="demo-app-sidebar-section">
+        <label>
+          <input
+            type="checkbox"
+            :checked="calendarOptions.weekends"
+            @change="handleWeekendsToggle"
+          />
+          toggle weekends
+        </label>
+      </div>
+      <div class="demo-app-sidebar-section">
+        <h2>All Events ({{ currentEvents.length }})</h2>
+        <ul>
+          <li v-for="event in currentEvents" :key="event.id">
+            <b>{{ event.startStr }}</b>
+            <i>{{ event.title }}</i>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="demo-app-main">
+      <FullCalendar class="demo-app-calendar" :options="calendarOptions">
+        <template v-slot:eventContent="arg">
+          <b>{{ arg.timeText }}</b>
+          <i>{{ arg.event.title }}</i>
+        </template>
+      </FullCalendar>
+      <AIOrganizer></AIOrganizer>
+      <!-- Le composant AIOrganizer est ici -->
+    </div>
+  </div>
+</template>
+
 <script>
-import { defineComponent } from 'vue'
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from './event-utils'
+import { defineComponent } from "vue";
+import FullCalendar from "@fullcalendar/vue3";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import { INITIAL_EVENTS, createEventId } from "./event-utils";
+import AIOrganizer from "./components/AIOrganizer.vue";
 
 export default defineComponent({
   components: {
     FullCalendar,
+    AIOrganizer, // Déclaration du composant AIOrganizer
   },
   data() {
     return {
@@ -16,14 +62,14 @@ export default defineComponent({
         plugins: [
           dayGridPlugin,
           timeGridPlugin,
-          interactionPlugin // needed for dateClick
+          interactionPlugin, // needed for dateClick
         ],
         headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
-        initialView: 'dayGridMonth',
+        initialView: "dayGridMonth",
         initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
         editable: true,
         selectable: true,
@@ -32,25 +78,20 @@ export default defineComponent({
         weekends: true,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
-        eventsSet: this.handleEvents
-        /* you can update a remote database when these fire:
-        eventAdd:
-        eventChange:
-        eventRemove:
-        */
+        eventsSet: this.handleEvents,
       },
       currentEvents: [],
-    }
+    };
   },
   methods: {
     handleWeekendsToggle() {
-      this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
+      this.calendarOptions.weekends = !this.calendarOptions.weekends; // update a property
     },
     handleDateSelect(selectInfo) {
-      let title = prompt('Please enter a new title for your event')
-      let calendarApi = selectInfo.view.calendar
+      let title = prompt("Please enter a new title for your event");
+      let calendarApi = selectInfo.view.calendar;
 
-      calendarApi.unselect() // clear date selection
+      calendarApi.unselect(); // clear date selection
 
       if (title) {
         calendarApi.addEvent({
@@ -58,70 +99,27 @@ export default defineComponent({
           title,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        })
+          allDay: selectInfo.allDay,
+        });
       }
     },
     handleEventClick(clickInfo) {
-      if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-        clickInfo.event.remove()
+      if (
+        confirm(
+          `Are you sure you want to delete the event '${clickInfo.event.title}'`
+        )
+      ) {
+        clickInfo.event.remove();
       }
     },
     handleEvents(events) {
-      this.currentEvents = events
+      this.currentEvents = events;
     },
-  }
-})
-
+  },
+});
 </script>
 
-<template>
-  <div class='demo-app'>
-    <div class='demo-app-sidebar'>
-      <div class='demo-app-sidebar-section'>
-        <h2>Instructions</h2>
-        <ul>
-          <li>Select dates and you will be prompted to create a new event</li>
-          <li>Drag, drop, and resize events</li>
-          <li>Click an event to delete it</li>
-        </ul>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            :checked='calendarOptions.weekends'
-            @change='handleWeekendsToggle'
-          />
-          toggle weekends
-        </label>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <h2>All Events ({{ currentEvents.length }})</h2>
-        <ul>
-          <li v-for='event in currentEvents' :key='event.id'>
-            <b>{{ event.startStr }}</b>
-            <i>{{ event.title }}</i>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class='demo-app-main'>
-      <FullCalendar
-        class='demo-app-calendar'
-        :options='calendarOptions'
-      >
-        <template v-slot:eventContent='arg'>
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </template>
-      </FullCalendar>
-    </div>
-  </div>
-</template>
-
-<style lang='css'>
-
+<style lang="css">
 h2 {
   margin: 0;
   font-size: 16px;
@@ -137,7 +135,8 @@ li {
   padding: 0;
 }
 
-b { /* used for event dates/times */
+b {
+  /* used for event dates/times */
   margin-right: 3px;
 }
 
@@ -164,9 +163,30 @@ b { /* used for event dates/times */
   padding: 3em;
 }
 
-.fc { /* the calendar root */
-  max-width: 1100px;
-  margin: 0 auto;
+.fc {
+  position: relative;
+  z-index: 0; /* Si nécessaire, donner un z-index plus bas au calendrier */
 }
 
+/* Style pour rendre AIOrganizer fixe dans le coin */
+.demo-app-main {
+  position: relative;
+}
+
+AIOrganizer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    1
+  ); /* Opaque blanc pour éviter la transparence */
+  border-radius: 8px; /* Coins arrondis pour l'esthétique */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce pour le contraste */
+  padding: 1em;
+  z-index: 9999; /* Assurez-vous qu'il soit bien au-dessus du calendrier */
+  overflow: hidden; /* Empêche tout débordement si nécessaire */
+}
 </style>
