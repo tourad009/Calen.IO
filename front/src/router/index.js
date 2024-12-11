@@ -1,25 +1,30 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-    {
-        path: '/', // Route racine
-        redirect: '/login' // Redirige vers la page login par défaut
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../views/login.vue')
-    },
-    {
-        path: '/calendar',
-        name: 'DemoApp',
-        component: () => import('../views/calendar.vue')
-    }
+  {
+    path: "/", // Route racine
+    redirect: "/login", // Redirige vers la page login par défaut
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/register.vue"),
+  },
+  {
+    path: "/calendar",
+    name: "DemoApp",
+    component: () => import("../views/calendar.vue"),
+  },
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;
