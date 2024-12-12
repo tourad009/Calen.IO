@@ -1,66 +1,136 @@
 <script>
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        checked: false,
-        error: '',
-        success: ''
-      };
+import { Calendar } from "lucide-vue-next";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      checked: false,
+      error: "",
+      success: "",
+    };
+  },
+  methods: {
+    resetError() {
+      this.error = "";
+      this.success = "";
     },
-    methods: {
-      resetError() {
-        this.error = '';
-        this.success = '';
-      },
-      login() {
-        // Simuler une connexion pour l'exemple
-        if (this.email === '' || this.password === '') {
-          this.error = 'Veuillez remplir tous les champs.';
-        } else {
-          this.success = 'Connexion réussie !';
-          // Rediriger ou effectuer d'autres actions ici
-        }
+    login() {
+      // Simuler une connexion pour l'exemple
+      if (this.email === "" || this.password === "") {
+        this.error = "Veuillez remplir tous les champs.";
+      } else {
+        this.success = "Connexion réussie !";
+        // Rediriger ou effectuer d'autres actions ici
       }
-    }
-  };
-  </script>
+    },
+  },
+  components: {
+    Calendar,
+  },
+};
+</script>
 
 <template>
-    <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-full overflow-hidden">
-      <div class="flex flex-col items-center justify-center">
-        <div class="rounded-[56px] p-1 bg-gradient-to-b from-primary to-transparent">
-          <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20 rounded-[53px]">
-            <div class="text-center mb-8">
-              <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Bienvenue</div>
-              <span class="text-muted-color font-medium">Connectez-vous pour continuer</span>
+  <div
+    class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center h-screen min-w-full overflow-hidden"
+  >
+    <div class="flex flex-col items-center justify-center">
+      <div
+        class="rounded-[56px] p-1 bg-gradient-to-b from-primary to-transparent"
+      >
+        <div
+          class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20 rounded-[53px]"
+        >
+          <div class="text-center mb-8">
+            <div class="flex justify-center items-center mb-6">
+              <Calendar class="w-8 h-8 text-gray-800" />
+              <h2 class="text-3xl text-gray-800 font-bold">
+                Calen.<span class="text-blue-500">IO</span>
+              </h2>
             </div>
-  
-            <div>
-              <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
-              <input id="email1" type="email" placeholder="Email address" class="w-full md:w-[30rem] mb-8 p-3 border border-gray-300 rounded-md" v-model="email" @input="resetError" />
-  
-              <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Mot de passe</label>
-              <input id="password1" type="password" placeholder="Mot de passe" class="w-full md:w-[30rem] mb-4 p-3 border border-gray-300 rounded-md" v-model="password" @input="resetError" />
-  
-              <div v-if="error" class="text-red-500 mb-4">{{ error }}</div>
-              <div v-if="success" class="text-green-500 mb-4">{{ success }}</div>
-  
-              <div class="flex items-center justify-between mt-2 mb-8 gap-8">
-                <div class="flex items-center">
-                  <input type="checkbox" v-model="checked" id="rememberme1" class="mr-2" />
-                  <label for="rememberme1" class="text-surface-900 dark:text-surface-0">Se souvenir de moi</label>
-                </div>
-                <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Mot de passe oublié ?</span>
+            <div
+              class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4"
+            >
+              Bienvenue
+            </div>
+            <span class="text-muted-color font-medium"
+              >Connectez-vous pour continuer</span
+            >
+          </div>
+
+          <div>
+            <label
+              for="email1"
+              class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+              >Email</label
+            >
+            <input
+              id="email1"
+              type="email"
+              placeholder="Email address"
+              class="w-full md:w-[30rem] mb-8 p-3 border border-gray-300 rounded-md"
+              v-model="email"
+              @input="resetError"
+            />
+
+            <label
+              for="password1"
+              class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
+              >Mot de passe</label
+            >
+            <input
+              id="password1"
+              type="password"
+              placeholder="Mot de passe"
+              class="w-full md:w-[30rem] mb-4 p-3 border border-gray-300 rounded-md"
+              v-model="password"
+              @input="resetError"
+            />
+
+            <div v-if="error" class="text-red-500 mb-4">{{ error }}</div>
+            <div v-if="success" class="text-green-500 mb-4">{{ success }}</div>
+
+            <div class="flex items-center justify-between mt-2 mb-8 gap-8">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  v-model="checked"
+                  id="rememberme1"
+                  class="mr-2"
+                />
+                <label
+                  for="rememberme1"
+                  class="text-surface-900 dark:text-surface-0"
+                  >Se souvenir de moi</label
+                >
               </div>
-              <button class="w-full bg-primary text-white py-3 rounded-md" @click.prevent="login">Se connecter</button>
+              <span
+                class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
+                >Mot de passe oublié ?</span
+              >
+            </div>
+            <button
+              class="w-full bg-blue-500 text-white py-3 rounded-md font-semibold"
+              @click.prevent="login"
+            >
+              Se connecter
+            </button>
+            <!-- Lien vers l'inscription -->
+            <div class="mt-4 text-center">
+              <p class="text-gray-700">
+                Don't have an account?
+                <a
+                  href="./Register"
+                  class="text-blue-600 hover:underline font-medium"
+                >
+                  Sign Up here.
+                </a>
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </template>
-  
-  
-  
+  </div>
+</template>
