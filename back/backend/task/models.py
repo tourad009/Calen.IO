@@ -1,5 +1,5 @@
 from django.db import models
-from user_app.models import user
+from user_app.models import User
 
 # Create your models here.
 class Task(models.Model):
@@ -18,7 +18,7 @@ class Task(models.Model):
         ],
         default='medium'
     )
-    user = models.ForeignKey(user, on_delete=models.CASCADE, related_name='tasks')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
 
     def __str__(self):
         return self.title

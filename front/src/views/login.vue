@@ -1,32 +1,43 @@
 <script>
-import { Calendar } from "lucide-vue-next";
+import { ref } from 'vue';
+import { useAuthStore } from '@/store/user'; // Assurez-vous que le chemin d'import est correct
+import { useRouter } from 'vue-router'; // Importez le routeur de Vue
+
 export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-      checked: false,
-      error: "",
-      success: "",
-    };
-  },
-  methods: {
-    resetError() {
-      this.error = "";
-      this.success = "";
-    },
-    login() {
-      // Simuler une connexion pour l'exemple
-      if (this.email === "" || this.password === "") {
-        this.error = "Veuillez remplir tous les champs.";
+  setup() {
+    const authStore = useAuthStore();
+    const router = useRouter(); // Initialisez le routeur
+    const username = ref('');
+    const password = ref('');
+    const error = ref(null);
+    const success = ref(null);
+
+    const handleLogin = async () => {
+      await authStore.login(username.value, password.value);
+      if (authStore.error) {
+        error.value = authStore.error;
+        success.value = null; // Réinitialiser success si une erreur se produit
       } else {
-        this.success = "Connexion réussie !";
-        // Rediriger ou effectuer d'autres actions ici
+        success.value = "Connexion réussie ! Redirection...";
+        router.push("/calendar"); // Redirection vers /calendar après une connexion réussie
       }
-    },
-  },
-  components: {
-    Calendar,
+    };
+
+    const resetError = () => {
+      error.value = null;
+      success.value = null; // Réinitialiser success lors de l'édition des champs
+    };
+
+    return {
+      username,
+      password,
+      handleLogin,
+      error,
+      success,
+      resetError,
+      isAuthenticated: authStore.isAuthenticated,
+      user: authStore.user,
+    };
   },
 };
 </script>
@@ -63,14 +74,14 @@ export default {
             <label
               for="email1"
               class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
-              >Email</label
+              >Username</label
             >
             <input
               id="email1"
-              type="email"
-              placeholder="Email address"
+              type="text"
+              placeholder="Username"
               class="w-full md:w-[30rem] mb-8 p-3 border border-gray-300 rounded-md"
-              v-model="email"
+              v-model="username"
               @input="resetError"
             />
 
@@ -95,7 +106,6 @@ export default {
               <div class="flex items-center">
                 <input
                   type="checkbox"
-                  v-model="checked"
                   id="rememberme1"
                   class="mr-2"
                 />
@@ -112,7 +122,7 @@ export default {
             </div>
             <button
               class="w-full bg-blue-500 text-white py-3 rounded-md font-semibold"
-              @click.prevent="login"
+              @click.prevent="handleLogin"
             >
               Se connecter
             </button>

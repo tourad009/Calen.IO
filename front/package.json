@@ -9,7 +9,9 @@
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
     "@fullcalendar/vue3": "^6.1.10",
+    "axios": "^1.7.9",
     "lucide-vue-next": "^0.468.0",
+    "pinia": "^2.3.0",
     "vue": "^3.2.45",
     "vue-router": "^4.5.0"
   },
