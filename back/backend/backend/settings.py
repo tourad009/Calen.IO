@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user_app',
     'task',    
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -104,6 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Pour autoriser les requetes venants du front
+]
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173'   # Lien autoriser le cryptage des informations des requetes
+] 
+
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_HTTPONLY = False  # Cela permet d'accéder au cookie via JavaScript
+AUTH_USER_MODEL = 'user_app.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
