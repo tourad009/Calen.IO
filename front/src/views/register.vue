@@ -62,6 +62,9 @@
         <div v-if="error" class="mt-4 text-center text-red-500 font-medium">
           {{ error }}
         </div>
+        <div v-if="success" class="mt-4 text-center text-red-500 font-medium">
+          {{ success }}
+        </div>
         <div class="mt-4 text-center">
           <p class="text-gray-700">
             Already have an account?
@@ -93,15 +96,18 @@
 import { Calendar } from "lucide-vue-next";
 import { ref } from "vue";
 import { useAuthStore } from "@/store/user";
+import { useRouter } from "vue-router";
 
 export default {
   components: { Calendar },
   setup() {
     const userStore = useAuthStore();
+    const router = useRouter(); 
     const username = ref("");
     const password = ref("");
     const confirmPassword = ref("");
     const error = ref(null);
+    const success = ref(null);
 
     const handleRegister = async () => {
       if (password.value !== confirmPassword.value) {
@@ -117,12 +123,16 @@ export default {
         if (userStore.error) {
           error.value = userStore.error;
         }
+        else {
+          success.value = "Creation réussie ! Redirection...";
+          router.push("/login"); 
+        }
       } catch (err) {
         error.value = "An error occurred while registering.";
         console.error(err);
       }
     };
-
+    
     return { username, password, confirmPassword, error, handleRegister };
   },
 };

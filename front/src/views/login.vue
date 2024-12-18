@@ -1,12 +1,12 @@
 <script>
 import { ref } from 'vue';
-import { useAuthStore } from '@/store/user'; // Assurez-vous que le chemin d'import est correct
-import { useRouter } from 'vue-router'; // Importez le routeur de Vue
+import { useAuthStore } from '@/store/user';
+import { useRouter } from 'vue-router'; 
 
 export default {
   setup() {
     const authStore = useAuthStore();
-    const router = useRouter(); // Initialisez le routeur
+    const router = useRouter(); 
     const username = ref('');
     const password = ref('');
     const error = ref(null);
