@@ -69,6 +69,7 @@ Calen.IO est conçu pour simplifier la gestion de votre emploi du temps. Avec un
 - **HTML/CSS/JavaScript** : Technologies de base pour le développement web. 🌐
 - **Vue.js** : Framework JavaScript pour construire l'interface utilisateur. 🖥️
 - **Tailwind CSS** : Framework CSS pour styliser l'application de manière moderne et réactive. 🎨
+- **FullCalendar JS** : Bibliothèque JavaScript pour afficher des calendriers interactifs. 📅
 - **Python/Django** : Utilisé pour le back-end. 🐍
 - **PostgreSQL** : Base de données pour stocker les données des utilisateurs. 🗄️
 
