@@ -9,6 +9,7 @@ Calen.IO est une application web innovante conçue pour gérer efficacement vos 
 - [Installation](#installation) 🛠️
 - [Configuration](#configuration) ⚙️
 - [Utilisation](#utilisation) 📖
+- [Structure du projet](#structure-du-projet) 🗂️
 - [Technologies utilisées](#technologies-utilisées) 💻
 - [Contribuer](#contribuer) 🤝
 - [Licence](#licence) 📜
@@ -63,6 +64,64 @@ Calen.IO est conçu pour simplifier la gestion de votre emploi du temps. Avec un
    ```
 
 3. Ouvrez votre navigateur et accédez à l'application à l'adresse indiquée par le serveur de développement. 🌐
+
+## Structure du projet 🗂️
+
+Voici une structure détaillée du projet :
+
+```
+calen-io/
+│
+├── front/                          # Code source du front-end
+│   ├── src/                        # Fichiers source Vue.js
+│   │   ├── assets/                 # Fichiers d'assets (images, styles)
+│   │   ├── components/             # Composants Vue.js
+│   │   ├── views/                  # Vues de l'application
+│   │   ├── router/                 # Configuration du routeur
+│   │   │   └── index.js            # Fichier de configuration des routes
+│   │   ├── store/                  # Gestion de l'état (Vuex)
+│   │   │   └── index.js            # Fichier de configuration du store
+│   │   ├── App.vue                 # Composant racine
+│   │   └── main.js                 # Point d'entrée de l'application
+│   │
+│   ├── public/                     # Fichiers statiques
+│   │   ├── index.html              # Fichier HTML principal
+│   │   └── favicon.ico             # Icône du site
+│   │
+│   ├── package.json                # Fichier de configuration npm
+│   ├── tailwind.config.js          # Configuration de Tailwind CSS
+│   └── vue.config.js               # Configuration de Vue.js
+│
+├── back/                           # Code source du back-end
+│   ├── backend/                    # Application Django
+│   │   ├── settings.py             # Configuration de l'application
+│   │   ├── urls.py                 # Configuration des routes
+│   │   ├── wsgi.py                 # Point d'entrée WSGI
+│   │   ├── asgi.py                 # Point d'entrée ASGI
+│   │   ├── manage.py               # Script de gestion de Django
+│   │   └── apps/                   # Applications Django spécifiques
+│   │       ├── events/             # Application pour la gestion des événements
+│   │       │   ├── migrations/     # Fichiers de migration
+│   │       │   ├── models.py       # Modèles de données
+│   │       │   ├── views.py        # Logique de vue
+│   │       │   ├── serializers.py  # Sérialiseurs pour l'API
+│   │       │   ├── urls.py         # Routes spécifiques à l'application
+│   │       │   └── tests.py        # Tests unitaires
+│   │       └── users/              # Application pour la gestion des utilisateurs
+│   │           ├── migrations/     # Fichiers de migration
+│   │           ├── models.py       # Modèles de données
+│   │           ├── views.py        # Logique de vue
+│   │           ├── serializers.py  # Sérialiseurs pour l'API
+│   │           ├── urls.py         # Routes spécifiques à l'application
+│   │           └── tests.py        # Tests unitaires
+│   │
+│   ├── migrations/                 # Fichiers de migration de la base de données
+│   └── requirements.txt            # Dépendances Python
+│
+└── README.md                       # Documentation du projet
+```
+
+Cette section fournit une vue d'ensemble complète de la structure du projet, ce qui peut être très utile pour les nouveaux contributeurs ou pour la documentation interne. Assurez-vous d'adapter cette structure si votre projet a des particularités spécifiques.
 
 ## Technologies utilisées
 
