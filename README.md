@@ -15,7 +15,7 @@ Calen.IO est une application web innovante conçue pour gérer efficacement vos 
 
 ## Aperçu
 
-Calen.IO est conçu pour simplifier la gestion de votre emploi du temps. Avec une interface moderne et des outils puissants, il vous permet de suivre vos événements, de planifier des rendez-vous et de recevoir des rappels.
+Calen.IO est conçu pour simplifier la gestion de votre emploi du temps. Avec une interface moderne et des outils puissants, il vous permet de suivre vos évènements et vos tâches, de planifier des rendez-vous et de recevoir des rappels.
 
 ## Fonctionnalités
 
