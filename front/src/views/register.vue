@@ -12,6 +12,10 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">
           Create an Account
         </h1>
+        <!-- Add this alert for success message -->
+        <div v-if="successMessage" class="alert alert-success">
+          {{ successMessage }}
+        </div>
         <form @submit.prevent="handleRegister">
           <!-- Champ Username -->
           <div class="mb-4">
@@ -59,15 +63,19 @@
             Sign Up
           </button>
         </form>
+
+        <!-- Message d'erreur -->
         <div v-if="error" class="mt-4 text-center text-red-500 font-medium">
           {{ error }}
         </div>
+
+        <!-- Lien vers la page de connexion -->
         <div class="mt-4 text-center">
           <p class="text-gray-700">
             Already have an account?
-            <a href="./Login" class="text-blue-600 hover:underline font-medium">
+            <router-link to="/login" class="text-blue-600 hover:underline font-medium">
               Log in
-            </a>
+            </router-link>
           </p>
         </div>
       </div>
@@ -93,17 +101,24 @@
 import { Calendar } from "lucide-vue-next";
 import { ref } from "vue";
 import { useAuthStore } from "@/store/user";
+import { useRouter } from "vue-router";
 
 export default {
   components: { Calendar },
   setup() {
     const userStore = useAuthStore();
+    const router = useRouter();
     const username = ref("");
     const password = ref("");
     const confirmPassword = ref("");
     const error = ref(null);
+    const successMessage = ref(null);
 
     const handleRegister = async () => {
+      error.value = null;
+      successMessage.value = null;
+
+      // Password validation
       if (password.value !== confirmPassword.value) {
         error.value = "Passwords do not match!";
         return;
@@ -112,18 +127,56 @@ export default {
       try {
         await userStore.setCsrfToken();
         const userData = { username: username.value, password: password.value };
-        await userStore.register(userData);
 
-        if (userStore.error) {
-          error.value = userStore.error;
+        const csrfToken = document.cookie.split("csrftoken=")[1]?.split(";")[0];
+        const response = await fetch("http://localhost:8000/api/user/register/", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken,
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || "Registration failed");
         }
+
+        // Show success message
+        successMessage.value = "Registration successful! Redirecting to login...";
+
+        // Reset form
+        username.value = "";
+        password.value = "";
+        confirmPassword.value = "";
+
+        // Wait 2 seconds before redirect
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
       } catch (err) {
-        error.value = "An error occurred while registering.";
+        error.value = err.message || "An error occurred during registration";
         console.error(err);
       }
     };
 
-    return { username, password, confirmPassword, error, handleRegister };
+    return { username, password, confirmPassword, error, successMessage, handleRegister };
   },
 };
 </script>
+
+<style scoped>
+.alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+</style>

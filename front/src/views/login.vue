@@ -3,6 +3,14 @@ import { ref } from 'vue';
 import { useAuthStore } from '@/store/user'; // Assurez-vous que le chemin d'import est correct
 import { useRouter } from 'vue-router'; // Importez le routeur de Vue
 
+// Ajout de la fonction getCookie
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return '';
+};
+
 export default {
   setup() {
     const authStore = useAuthStore();
@@ -13,13 +21,31 @@ export default {
     const success = ref(null);
 
     const handleLogin = async () => {
-      await authStore.login(username.value, password.value);
-      if (authStore.error) {
-        error.value = authStore.error;
-        success.value = null; // Réinitialiser success si une erreur se produit
-      } else {
-        success.value = "Connexion réussie ! Redirection...";
-        router.push("/calendar"); // Redirection vers /calendar après une connexion réussie
+      try {
+        const csrfToken = getCookie('csrftoken');
+        const response = await fetch('http://localhost:8000/api/user/login/', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          },
+          body: JSON.stringify({
+            username: username.value,
+            password: password.value
+          })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Login failed');
+        }
+
+        router.push('/calendar');
+      } catch (error) {
+        console.error('Login error:', error);
+        error.value = error.message;
       }
     };
 
