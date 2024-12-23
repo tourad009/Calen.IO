@@ -1,2 +1,3 @@
 # backend's virtual environement
 back/.venv/
+.vscode/
