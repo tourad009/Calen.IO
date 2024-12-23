@@ -11,7 +11,6 @@ Calen.IO est une application web innovante conçue pour gérer efficacement vos 
 - [Utilisation](#utilisation) 📖
 - [Structure du projet](#structure-du-projet) 🗂️
 - [Technologies utilisées](#technologies-utilisées) 💻
-- [Licence](#licence) 📜
 
 ## Aperçu
 
@@ -128,7 +127,3 @@ calen-io/
 - **FullCalendar JS** : Bibliothèque JavaScript pour afficher des calendriers interactifs. 📅
 - **Python/Django** : Utilisé pour le back-end. 🐍
 - **PostgreSQL** : Base de données pour stocker les données des utilisateurs. 🗄️
-
-## Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails. 📄
