@@ -1,7 +1,0 @@
-{
-    "sourcery.ignorePatterns": [
-        "**/site-packages/**",
-        "**/__pycache__/**",
-        "**/migrations/**"
-    ]
-} 
